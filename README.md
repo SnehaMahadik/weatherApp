@@ -22,3 +22,9 @@ https://api.openweathermap.org/data/2.5/forecast?appid=d6e981f6981847fe6815fdbc0
 
 ## Architecture
 The app uses MVVM [Model-View-ViewModel] architecture to have a unidirectional flow of data, separation of concern, testability
+
+Improvements :
+1) Capture User current location
+2) Implementation of DI (dagger2/ Hilt)
+3)UI can be improved
+4) Unite test cases and BDD can be implemented
