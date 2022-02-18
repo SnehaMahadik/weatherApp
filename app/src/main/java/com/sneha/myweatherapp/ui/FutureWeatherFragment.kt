@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.freenow.myweatherapp.R
 import com.freenow.myweatherapp.databinding.FragmentFutureWeatherBinding
 import com.sneha.myweatherapp.modals.List
 import com.sneha.myweatherapp.viewModels.WeatherViewModel
@@ -38,21 +39,17 @@ class FutureWeatherFragment : Fragment() {
 
     private fun setFutureWeatherData(weathers: WeatherClass) {
         for (weather in weathers.list) {
-            weather.dtTxt?.let { newDate ->
+            weather.dtTxt.let { newDate ->
                 if (viewModel.isFutureDate(newDate)) {
 
-                    val priceText = TextView(requireActivity())
-                    priceText.text = newDate
-                    val serviceDescParams = ConstraintLayout.LayoutParams(
-                        ConstraintLayout.LayoutParams.MATCH_PARENT,
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT
-                    )
-                    priceText.layoutParams = serviceDescParams
-                    binding.scrollView.addView(priceText)
+                    val dateText= TextView(requireActivity())
+                    dateText.text = newDate
+                    dateText.setTextColor(resources.getColor(R.color.purple_700))
+                    binding.scrollView.addView(dateText)
 
                     Log.d("....", "" + weather.dtTxt)
                     viewModel.getWeatherDataForDate(newDate)?.forEach { (key, value) ->
-                        println("$key = ${value.weather[0].description}")
+                        println("$key = ${value.weather}")
                         addView(value)
                     }
                 }
@@ -63,12 +60,12 @@ class FutureWeatherFragment : Fragment() {
 
     private fun addView(weatherList: List) {
         for (weatherInfo in weatherList.weather) {
-            val priceText = TextView(requireActivity())
-            priceText.text = weatherInfo.description
-            binding.scrollView.addView(priceText)
+            val weatherInfoText = TextView(requireActivity())
+            weatherInfoText.text =resources.getString(R.string.weatherDescription,weatherInfo.description,weatherList.wind)
+            binding.scrollView.addView(weatherInfoText)
         }
-        val priceText = TextView(requireActivity())
-        priceText.text = "\n"
-        binding.scrollView.addView(priceText)
+        val newLine = TextView(requireActivity())
+        newLine.text = "\n"
+        binding.scrollView.addView(newLine)
     }
 }

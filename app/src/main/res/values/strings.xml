@@ -16,4 +16,5 @@
     <string name="forecast">Get Forecast</string>
     <string name="future_weather_title">Weekly Forecast</string>
     <string name="not_available">NOT AVAILABLE</string>
+    <string name="weatherDescription">Feels Like: %1$s Wind: %2$s</string>
 </resources>
