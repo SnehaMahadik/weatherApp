@@ -20,7 +20,7 @@ import com.sneha.myweatherapp.viewModels.WeatherViewModel
 class WeatherFragment : Fragment() {
 
     private lateinit var binding: FragmentWeatherBinding
-    val API_KEY = "d6e981f6981847fe6815fdbc0f401980"
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,27 +34,38 @@ class WeatherFragment : Fragment() {
     private fun setup() {
         val weatherInstance = WeatherService.getInstance()
         val repository = WeatherRepository(weatherInstance)
-        val  viewModel = ViewModelProvider(requireActivity(), WeatherViewModelFactory(repository)).get(
-            WeatherViewModel::class.java)
-        viewModel.getCurrTemp(API_KEY, 51.5072, 0.1276)
-        viewModel.weather.observe(viewLifecycleOwner , Observer { weatherInfo->updateWeatherView(weatherInfo)})
+        val viewModel =
+            ViewModelProvider(requireActivity(), WeatherViewModelFactory(repository)).get(
+                WeatherViewModel::class.java
+            )
+        viewModel.getCurrTemp(51.5072, 0.1276)
+        viewModel.weather.observe(
+            viewLifecycleOwner,
+            Observer { weatherInfo -> updateWeatherView(weatherInfo) })
     }
 
     private fun updateWeatherView(weather: WeatherClass) {
-        binding.weather=weather
-        val currentWeather= weather.list[0]
-        binding.humidityText.text = resources.getString(R.string.humidity_percentage, currentWeather.main?.humidity)
-        binding.dateTimeText.text = weather.city?.name+" : "+ currentWeather.dtTxt
-        binding.pressureText.text = resources.getString(R.string.atm_pressure, currentWeather.main?.pressure)
-        binding.windSpeedText.text = resources.getString(R.string.wind_speed, currentWeather.wind?.speed)
-        binding.temperatureText.text = resources.getString(R.string.temperature, currentWeather.main?.temp)
-        binding.realFeelText.text = resources.getString(R.string.temperature, currentWeather.main?.feelsLike)
+        binding.weather = weather
+        val currentWeather = weather.list[0]
+        binding.humidityText.text =
+            resources.getString(R.string.humidity_percentage, currentWeather.main?.humidity)
+        binding.dateTimeText.text = weather.city?.name + " : " + currentWeather.dtTxt
+        binding.pressureText.text =
+            resources.getString(R.string.atm_pressure, currentWeather.main?.pressure)
+        binding.windSpeedText.text =
+            resources.getString(R.string.wind_speed, currentWeather.wind?.speed)
+        binding.temperatureText.text =
+            resources.getString(R.string.temperature, currentWeather.main?.temp)
+        binding.realFeelText.text =
+            resources.getString(R.string.temperature, currentWeather.main?.feelsLike)
         binding.windDirectionText.text = currentWeather.wind?.speed.toString()
-        binding.visibilityText.text = resources.getString(R.string.visibility, currentWeather.visibility)
+        binding.visibilityText.text =
+            resources.getString(R.string.visibility, currentWeather.visibility)
         binding.weatherDescriptionText.text = currentWeather.weather[0].description
         binding.forecast.setOnClickListener(View.OnClickListener {
-            val bundle= bundleOf("WEATHER" to weather )
-            NavHostFragment.findNavController(this).navigate(R.id.action_weatherFragment_to_futureWeatherFragment,bundle)
+            val bundle = bundleOf("WEATHER" to weather)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_weatherFragment_to_futureWeatherFragment, bundle)
         })
 
     }

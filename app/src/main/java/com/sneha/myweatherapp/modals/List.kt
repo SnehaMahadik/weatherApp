@@ -9,6 +9,6 @@ data class List (
   @SerializedName("weather"    ) var weather    : ArrayList<Weather> = arrayListOf(),
   @SerializedName("wind"       ) var wind       : Wind?              = Wind(),
   @SerializedName("visibility" ) var visibility : Int?               = null,
-  @SerializedName("dt_txt"     ) var dtTxt      : String?            = null
+  @SerializedName("dt_txt"     ) var dtTxt      : String
 
 )
