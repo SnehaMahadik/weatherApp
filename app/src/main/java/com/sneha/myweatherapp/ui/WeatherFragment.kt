@@ -40,8 +40,8 @@ class WeatherFragment : Fragment() {
             )
         viewModel.getCurrTemp(51.5072, 0.1276)
         viewModel.weather.observe(
-            viewLifecycleOwner,
-            Observer { weatherInfo -> updateWeatherView(weatherInfo) })
+            viewLifecycleOwner
+        ) { weatherInfo -> updateWeatherView(weatherInfo) }
     }
 
     private fun updateWeatherView(weather: WeatherClass) {
@@ -61,7 +61,7 @@ class WeatherFragment : Fragment() {
         binding.windDirectionText.text = currentWeather.wind?.speed.toString()
         binding.visibilityText.text =
             resources.getString(R.string.visibility, currentWeather.visibility)
-        binding.weatherDescriptionText.text = currentWeather.weather[0].description
+        binding.weatherDescriptionText.text = currentWeather.weather?.get(0)?.description ?: ""
         binding.forecast.setOnClickListener(View.OnClickListener {
             val bundle = bundleOf("WEATHER" to weather)
             NavHostFragment.findNavController(this)

@@ -3,6 +3,7 @@ package com.sneha.myweatherapp.viewModels
 import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sneha.myweatherapp.modals.List
@@ -24,7 +25,7 @@ class WeatherViewModel(val repository: WeatherRepository) : ViewModel() {
             val response = repository.getCurrentWeather(lat, lon)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    weather.value = response.body()
+                    weather.postValue(response.body())
                 } else {
                     Log.d("Test", "Error fetching data")
                 }

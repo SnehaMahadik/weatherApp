@@ -59,7 +59,7 @@ class FutureWeatherFragment : Fragment() {
     }
 
     private fun addView(weatherList: List) {
-        for (weatherInfo in weatherList.weather) {
+        for (weatherInfo in weatherList.weather!!) {
             val weatherInfoText = TextView(requireActivity())
             weatherInfoText.text =resources.getString(R.string.weatherDescription,weatherInfo.description,weatherList.wind)
             binding.scrollView.addView(weatherInfoText)

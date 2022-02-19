@@ -6,7 +6,7 @@ data class List (
 
   @SerializedName("dt"         ) var dt         : Int?               = null,
   @SerializedName("main"       ) var main       : Main?              = Main(),
-  @SerializedName("weather"    ) var weather    : ArrayList<Weather> = arrayListOf(),
+  @SerializedName("weather"    ) var weather    : ArrayList<Weather>? = arrayListOf(),
   @SerializedName("wind"       ) var wind       : Wind?              = Wind(),
   @SerializedName("visibility" ) var visibility : Int?               = null,
   @SerializedName("dt_txt"     ) var dtTxt      : String
