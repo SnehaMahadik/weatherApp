@@ -63,20 +63,4 @@ class WeatherViewModelTest {
         list.add(List(dtTxt = "12/4/10"))
         return WeatherClass(list=list,city = City(name = "London"))
     }
-
-//    @Test
-//    fun getCurrTemp() {
-//    }
-//
-//    @Test
-//    fun isFutureDate() {
-//    }
-//
-//    @Test
-//    fun getWeatherDataForDate() {
-//    }
-//
-//    @Test
-//    fun getRepository() {
-//    }
 }

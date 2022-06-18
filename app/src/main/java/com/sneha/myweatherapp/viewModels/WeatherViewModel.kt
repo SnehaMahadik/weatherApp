@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WeatherViewModel(val repository: WeatherRepository) : ViewModel() {
+class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() {
 
     val weather: MutableLiveData<WeatherClass> = MutableLiveData()
 
