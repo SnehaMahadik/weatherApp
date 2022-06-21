@@ -1,4 +1,4 @@
-package com.sneha.myweatherapp.adapter
+package com.sneha.myweatherapp.ui.adapter
 
 import android.view.View
 import androidx.databinding.BindingAdapter

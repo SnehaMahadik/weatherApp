@@ -1,9 +1,11 @@
-package com.sneha.myweatherapp
+package com.sneha.myweatherapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.freenow.myweatherapp.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

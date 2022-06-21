@@ -6,42 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.freenow.myweatherapp.R
 import com.freenow.myweatherapp.databinding.FragmentWeatherBinding
 import com.sneha.myweatherapp.modals.WeatherClass
-import com.sneha.myweatherapp.viewModels.WeatherViewModelFactory
-import com.sneha.myweatherapp.networking.WeatherService
-import com.sneha.myweatherapp.repo.WeatherRepository
-import com.sneha.myweatherapp.viewModels.WeatherViewModel
+import com.sneha.myweatherapp.ui.viewModels.WeatherViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class WeatherFragment : Fragment() {
-
+    private val viewModel:WeatherViewModel by viewModels()
     private lateinit var binding: FragmentWeatherBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
         setup()
         binding = FragmentWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     private fun setup() {
-        val weatherInstance = WeatherService.getInstance()
-        val repository = WeatherRepository(weatherInstance)
-        val viewModel =
-            ViewModelProvider(requireActivity(), WeatherViewModelFactory(repository)).get(
-                WeatherViewModel::class.java
-            )
         viewModel.getCurrTemp(51.5072, 0.1276)
-        viewModel.weather.observe(
-            viewLifecycleOwner
-        ) { weatherInfo -> updateWeatherView(weatherInfo) }
+        viewModel.weather.observe(viewLifecycleOwner) { weatherInfo -> updateWeatherView(weatherInfo) }
     }
 
     private fun updateWeatherView(weather: WeatherClass) {
@@ -62,6 +53,7 @@ class WeatherFragment : Fragment() {
         binding.visibilityText.text =
             resources.getString(R.string.visibility, currentWeather.visibility)
         binding.weatherDescriptionText.text = currentWeather.weather?.get(0)?.description ?: ""
+
         binding.forecast.setOnClickListener(View.OnClickListener {
             val bundle = bundleOf("WEATHER" to weather)
             NavHostFragment.findNavController(this)

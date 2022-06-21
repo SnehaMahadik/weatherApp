@@ -1,28 +1,30 @@
-package com.sneha.myweatherapp.viewModels
+package com.sneha.myweatherapp.ui.viewModels
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.sneha.myweatherapp.domain.WeatherInfoUseCase
 import com.sneha.myweatherapp.modals.List
 import com.sneha.myweatherapp.modals.WeatherClass
-import com.sneha.myweatherapp.repo.WeatherRepository
+import com.sneha.myweatherapp.modals.WeatherInfoRequest
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() {
+@HiltViewModel
+class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUseCase) : ViewModel() {
 
     val weather: MutableLiveData<WeatherClass> = MutableLiveData()
 
     fun getCurrTemp(lat: Double, lon: Double) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = repository.getCurrentWeather(lat, lon)
+            val response = weatherInfoUseCase.executeUseCase(WeatherInfoRequest(lat,lon))
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     weather.postValue(response.body())

@@ -1,4 +1,4 @@
-package com.sneha.myweatherapp.viewModels.utils
+package com.sneha.myweatherapp.ui.viewModels.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -2,18 +2,22 @@
 
 Android App which displays current weather and weather forecast with given lat and long
 
-## Features
+## Technical Stack
+- MVVM
+- Clean Architecture  
 - Coroutines
 - JSON Parsing
 - ConstraintLayout
+- Hilt (initial implementation)  
 - RX
-
-## Libraries
 - Retrofit
 - LiveData
 - ViewModel
 - DataBinding
--Navigation Graph
+- Navigation Graph
+- Junit/Mockito (In progress)
+- Cucumber/Espresso -(In progress)
+
 
 ## API
 https://api.openweathermap.org/data/2.5/forecast?appid=d6e981f6981847fe6815fdbc0f401980&lat=51.5072&lon=0.1276
@@ -23,6 +27,5 @@ The app uses MVVM [Model-View-ViewModel] architecture to have a unidirectional f
 
 ## Improvements :
 1) Capture User current location
-2) Implementation of DI (dagger2/ Hilt)
-3)UI can be improved
+2) UI can be improved
 4) Unite test cases and BDD can be implemented

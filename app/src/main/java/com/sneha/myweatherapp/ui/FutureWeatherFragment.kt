@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.freenow.myweatherapp.R
 import com.freenow.myweatherapp.databinding.FragmentFutureWeatherBinding
 import com.sneha.myweatherapp.modals.List
-import com.sneha.myweatherapp.viewModels.WeatherViewModel
+import com.sneha.myweatherapp.ui.viewModels.WeatherViewModel
 import com.sneha.myweatherapp.modals.WeatherClass
-import java.util.*
 
 
 class FutureWeatherFragment : Fragment() {
