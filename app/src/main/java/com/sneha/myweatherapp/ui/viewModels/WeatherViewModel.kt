@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sneha.myweatherapp.domain.WeatherInfoUseCase
 import com.sneha.myweatherapp.modals.List
 import com.sneha.myweatherapp.modals.WeatherClass
@@ -23,7 +24,7 @@ class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUs
     val weather: MutableLiveData<WeatherClass> = MutableLiveData()
 
     fun getCurrTemp(lat: Double, lon: Double) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             val response = weatherInfoUseCase.executeUseCase(WeatherInfoRequest(lat,lon))
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
