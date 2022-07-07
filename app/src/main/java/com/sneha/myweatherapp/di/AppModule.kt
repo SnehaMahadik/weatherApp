@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.sneha.myweatherapp.domain.WeatherInfoUseCase
 import com.sneha.myweatherapp.domain.WeatherInfoUseCaseImpl
 import com.sneha.myweatherapp.networking.WeatherInstance
+import com.sneha.myweatherapp.networking.remote.NetworkResponseAdapterFactory
 import com.sneha.myweatherapp.repo.DefaultRepository
 import com.sneha.myweatherapp.repo.WeatherRepository
 import dagger.Module
@@ -23,14 +24,15 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideWeatherRepository(defaultWeatherRepository: WeatherRepository) : DefaultRepository
-            = defaultWeatherRepository
+    fun provideWeatherRepository(defaultWeatherRepository: WeatherRepository): DefaultRepository =
+        defaultWeatherRepository
 
     @Singleton
     @Provides
-    fun provideWeatherService(retrofit: Retrofit) : WeatherInstance {
+    fun provideWeatherService(retrofit: Retrofit): WeatherInstance {
         return retrofit.create(WeatherInstance::class.java)
     }
+
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
@@ -38,8 +40,10 @@ class AppModule {
             .baseUrl(WeatherInstance.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
     }
+
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -60,6 +64,6 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideWeatherInfoUseCase(weatherInfoUseCaseImpl: WeatherInfoUseCaseImpl) : WeatherInfoUseCase
-            = weatherInfoUseCaseImpl
+    fun provideWeatherInfoUseCase(weatherInfoUseCaseImpl: WeatherInfoUseCaseImpl): WeatherInfoUseCase =
+        weatherInfoUseCaseImpl
 }

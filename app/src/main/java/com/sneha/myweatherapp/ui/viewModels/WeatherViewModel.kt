@@ -9,8 +9,8 @@ import com.sneha.myweatherapp.domain.WeatherInfoUseCase
 import com.sneha.myweatherapp.modals.List
 import com.sneha.myweatherapp.modals.WeatherClass
 import com.sneha.myweatherapp.modals.WeatherInfoRequest
+import com.sneha.myweatherapp.networking.remote.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,18 +19,28 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUseCase) : ViewModel() {
+class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUseCase) :
+    ViewModel() {
 
     val weather: MutableLiveData<WeatherClass> = MutableLiveData()
 
     fun getCurrTemp(lat: Double, lon: Double) {
         viewModelScope.launch {
-            val response = weatherInfoUseCase.executeUseCase(WeatherInfoRequest(lat,lon))
+
             withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    weather.postValue(response.body())
-                } else {
-                    Log.d("Test", "Error fetching data")
+
+                when (val response =
+                    weatherInfoUseCase.executeUseCase(WeatherInfoRequest(lat, lon))) {
+
+                    is NetworkResponse.Success -> {
+                        Log.i("response", "" + response)
+                        weather.postValue(response.body)
+                    }
+                    is NetworkResponse.NetworkError -> {
+                    }
+                    is NetworkResponse.UnknownError -> {
+                        Log.i("response", "" + response)
+                    }
                 }
             }
         }
@@ -59,8 +69,13 @@ class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUs
         val listWeatherInfoForDate = weather.value?.list?.filter { weatherList ->
             weatherList.dtTxt.let { newDateFormat.format(sdf.parse(it)) == newDateFormatDate }
         }
-        listWeatherInfoForDate.isNullOrEmpty().let {  val map =
-            listWeatherInfoForDate?.associateBy(keySelector = { weatherDate -> sdf.parse(weatherDate.dtTxt) })
+        listWeatherInfoForDate.isNullOrEmpty().let {
+            val map =
+                listWeatherInfoForDate?.associateBy(keySelector = { weatherDate ->
+                    sdf.parse(
+                        weatherDate.dtTxt
+                    )
+                })
             return map
         }
 

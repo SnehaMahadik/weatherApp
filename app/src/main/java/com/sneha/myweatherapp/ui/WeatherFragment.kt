@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
-    private val viewModel:WeatherViewModel by viewModels()
+    private val viewModel: WeatherViewModel by viewModels()
     private lateinit var binding: FragmentWeatherBinding
 
     override fun onCreateView(
@@ -31,28 +31,28 @@ class WeatherFragment : Fragment() {
     }
 
     private fun setup() {
-        viewModel.getCurrTemp(51.5072, 0.1276)
+
+        viewModel.getCurrTemp(1.1, 0.0)
         viewModel.weather.observe(viewLifecycleOwner) { weatherInfo -> updateWeatherView(weatherInfo) }
     }
 
     private fun updateWeatherView(weather: WeatherClass) {
-        binding.weather = weather
         val currentWeather = weather.list[0]
-        binding.humidityText.text =
-            resources.getString(R.string.humidity_percentage, currentWeather.main?.humidity)
-        binding.dateTimeText.text = weather.city?.name + " : " + currentWeather.dtTxt
-        binding.pressureText.text =
-            resources.getString(R.string.atm_pressure, currentWeather.main?.pressure)
-        binding.windSpeedText.text =
-            resources.getString(R.string.wind_speed, currentWeather.wind?.speed)
-        binding.temperatureText.text =
-            resources.getString(R.string.temperature, currentWeather.main?.temp)
-        binding.realFeelText.text =
-            resources.getString(R.string.temperature, currentWeather.main?.feelsLike)
-        binding.windDirectionText.text = currentWeather.wind?.speed.toString()
-        binding.visibilityText.text =
-            resources.getString(R.string.visibility, currentWeather.visibility)
-        binding.weatherDescriptionText.text = currentWeather.weather?.get(0)?.description ?: ""
+        binding.apply {
+            this.weather = weather
+            currentWeather.let {
+                humidityText.text =
+                    resources.getString(R.string.humidity_percentage, it.main?.humidity)
+                dateTimeText.text = weather.city?.name + " : " + it.dtTxt
+                pressureText.text = resources.getString(R.string.atm_pressure, it.main?.pressure)
+                windSpeedText.text = resources.getString(R.string.wind_speed, it.wind?.speed)
+                temperatureText.text = resources.getString(R.string.temperature, it.main?.temp)
+                realFeelText.text = resources.getString(R.string.temperature, it.main?.feelsLike)
+                windDirectionText.text = it.wind?.speed.toString()
+                visibilityText.text = resources.getString(R.string.visibility, it.visibility)
+                weatherDescriptionText.text = it.weather?.get(0)?.description ?: ""
+            }
+        }
 
         binding.forecast.setOnClickListener(View.OnClickListener {
             val bundle = bundleOf("WEATHER" to weather)
