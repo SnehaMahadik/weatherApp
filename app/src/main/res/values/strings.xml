@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">MyWeatherApp</string>
+    <string name="current_weather">Today</string>
+    <string name="humidity_percentage">%1$d %%</string>
+    <string name="atm_pressure">%1$d mb</string>
+    <string name="wind_speed">%1$f km/h</string>
+    <string name="temperature">%.2fº</string>
+    <string name="visibility">%1$d km</string>
+    <string name="not_available_description">TODO</string>
+    <string name="real_feel_label">Real feel:</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="wind_speed_label">Wind speed</string>
+    <string name="pressure_label">Pressure</string>
+    <string name="wind_direction_label">Wind direction</string>
+    <string name="visibility_label">Visibility</string>
+    <string name="forecast">Get Forecast</string>
+    <string name="future_weather_title">Weekly Forecast</string>
+    <string name="not_available">NOT AVAILABLE</string>
+    <string name="weatherDescription">Feels Like: %1$s Wind: %2$s</string>
 </resources>
