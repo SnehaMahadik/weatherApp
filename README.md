@@ -16,7 +16,7 @@ Android App which displays current weather and weather forecast with given lat a
 - DataBinding
 - Navigation Graph
 - Junit/Mockito (In progress)
-- Cucumber/Espresso -(In progress)
+- Cucumber/Espresso -(TBD)
 
 
 ## API
