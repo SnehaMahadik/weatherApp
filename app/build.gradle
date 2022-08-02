@@ -10,7 +10,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.freenow.myweatherapp"
+        applicationId "com.mobile.myweatherapp"
         minSdk 21
         targetSdk 30
         versionCode 1

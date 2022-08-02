@@ -6,13 +6,13 @@
     <data>
         <variable
             name="weather"
-            type="com.sneha.myweatherapp.modals.WeatherClass" />
+            type="com.mobile.myweatherapp.models.WeatherClass" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.sneha.myweatherapp.ui.WeatherFragment">
+        tools:context="com.mobile.myweatherapp.presentation.currentWeather.WeatherFragment">
 
         <TextView
             android:id="@+id/locationText"
