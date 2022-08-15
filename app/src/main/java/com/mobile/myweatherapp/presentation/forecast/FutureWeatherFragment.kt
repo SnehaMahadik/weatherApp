@@ -39,7 +39,7 @@ class FutureWeatherFragment : Fragment() {
                     dateText.text = newDate
                     dateText.setTextColor(resources.getColor(R.color.purple_700))
                     binding.scrollView.addView(dateText)
-                    viewModel.getWeatherDataForDate(newDate)?.forEach { (key, value) ->
+                    viewModel.getWeatherDataForDate(newDate,weathers)?.forEach { (key, value) ->
                         println("$key = ${value.weather}")
                         addView(value)
                     }

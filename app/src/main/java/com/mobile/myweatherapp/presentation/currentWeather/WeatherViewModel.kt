@@ -1,7 +1,6 @@
 package com.mobile.myweatherapp.presentation.currentWeather
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,25 +21,14 @@ import javax.inject.Inject
 class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUseCase) :
     ViewModel() {
 
-    val weather: MutableLiveData<WeatherClass> = MutableLiveData()
+    val weather: MutableLiveData<NetworkResponse<WeatherClass, Error>> = MutableLiveData()
 
     fun getCurrTemp(lat: Double, lon: Double) {
+        weather.postValue(NetworkResponse.Loading)
         viewModelScope.launch {
-
             withContext(Dispatchers.Main) {
-
-                when (val response =
-                    weatherInfoUseCase.executeUseCase(WeatherInfoRequest(lat, lon))) {
-
-                    is NetworkResponse.Success -> {
-                        weather.postValue(response.body)
-                    }
-                    is NetworkResponse.NetworkError -> {
-                    }
-                    is NetworkResponse.UnknownError -> {
-                        Log.i("response", "" + response)
-                    }
-                }
+                val response = weatherInfoUseCase.executeUseCase(WeatherInfoRequest(lat, lon))
+                weather.postValue(response)
             }
         }
     }
@@ -57,7 +45,7 @@ class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUs
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun getWeatherDataForDate(newDate: String): Map<Date?, List>? {
+    fun getWeatherDataForDate(newDate: String, weatherData: WeatherClass): Map<Date?, List>? {
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         var newDateFormatDate = ""
         val date = sdf.parse(newDate)
@@ -65,7 +53,7 @@ class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUs
         date?.let {
             newDateFormatDate = newDateFormat.format(date)
         }
-        val listWeatherInfoForDate = weather.value?.list?.filter { weatherList ->
+        val listWeatherInfoForDate = weatherData.list.filter { weatherList ->
             weatherList.dtTxt.let { newDateFormat.format(sdf.parse(it)) == newDateFormatDate }
         }
         listWeatherInfoForDate.isNullOrEmpty().let {
@@ -77,7 +65,5 @@ class WeatherViewModel @Inject constructor(var weatherInfoUseCase: WeatherInfoUs
                 })
             return map
         }
-
-
     }
 }
