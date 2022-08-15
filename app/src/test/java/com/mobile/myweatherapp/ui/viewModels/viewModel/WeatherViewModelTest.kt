@@ -58,7 +58,7 @@ class WeatherViewModelTest {
         testCoroutineRule.runBlockingTest {
             weatherViewModel = WeatherViewModel(weatherInfoUseCase)
             weatherViewModel.getCurrTemp(89.0, 90.98)
-            weatherViewModel.weather.observeForever(apiUsersObserver)
+            weatherViewModel.weather.observeForever(Observer { apiUsersObserver })
             val response = success(getMockResponse())
             assertEquals(response.body()?.city?.name, "London")
         }
